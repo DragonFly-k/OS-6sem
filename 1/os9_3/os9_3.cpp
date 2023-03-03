@@ -1,141 +1,150 @@
 ﻿#define _CRT_SECURE_NO_WARNINGS
-#include <iostream>
 #include <Windows.h>
-using namespace std;
+#include <iostream>
+#include <fileapi.h>
 
-bool printFileTxt(LPWSTR FileName) {
-    HANDLE fileHandle = CreateFile(FileName, GENERIC_READ, NULL, NULL, OPEN_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL);
-    if (fileHandle == INVALID_HANDLE_VALUE) return false;
-    DWORD n = NULL;
-    char buf[1024];
-    ZeroMemory(buf, sizeof(buf));
-    bool readFile = ReadFile(fileHandle, &buf, sizeof(buf), &n, NULL);
-    cout << "\nСодержимое файла:\n" << buf << endl;
-    CloseHandle(fileHandle);
+BOOL printFileText(LPWSTR fileName) {
+	try {
+		HANDLE hf = CreateFile(fileName, GENERIC_READ, FILE_SHARE_READ, NULL, OPEN_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL);
+		if (hf == INVALID_HANDLE_VALUE) throw "create or open file failed";
+
+		DWORD  n = NULL;
+		char buf[1024];
+
+		ZeroMemory(buf, sizeof(buf));
+		BOOL b = ReadFile(hf, &buf, 1024, &n, NULL);
+		if (!b) throw "read file failed";
+		std::cout << buf << std::endl;
+		CloseHandle(hf);
+		return true;
+	}
+	catch (const char* em) {
+		std::cout << "error:" << em << std::endl;
+		return false;
+	}
 }
 
-BOOL insRowFileTxt(LPWSTR FileName, LPWSTR str, DWORD row)
+BOOL insRowFileTxt(LPWSTR fileName, LPWSTR str, DWORD row) {
+	char filepath[20];
+	wcstombs(filepath, fileName, 20);
+	char stringToInsert[50];
+	wcstombs(stringToInsert, str, 50);
+
+
+	try
+	{
+		HANDLE hf = CreateFile(fileName, GENERIC_READ, FILE_SHARE_READ, NULL, OPEN_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL);
+
+		if (hf == INVALID_HANDLE_VALUE) {
+			CloseHandle(hf);
+			throw "create or open file failed";
+		}
+
+		DWORD n = NULL;
+		char buf[1024];
+		BOOL b;
+
+		ZeroMemory(buf, sizeof(buf));
+		b = ReadFile(hf, &buf, sizeof(buf), &n, NULL);
+		if (!b) {
+			CloseHandle(hf);
+			throw ("Read file unsuccessful\n");
+		}
+
+		if (!b) {
+			std::cout << "Read file unsuccessfully\n";
+			CloseHandle(hf);
+			return false;
+		}
+		CloseHandle(hf);
+
+		HANDLE hAppend = CreateFile(fileName, GENERIC_WRITE, NULL, NULL, OPEN_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL);
+
+		char editedBuf[1024];
+		ZeroMemory(editedBuf, sizeof(editedBuf));
+
+		int line = 1;
+		int j = 0;
+		int k = 0;
+		for (int i = 0; i < n; i++) {
+			if (line == row) {
+				for (int k = 0; k < sizeof(stringToInsert); k++) {
+					editedBuf[j] = str[k];
+					j++;
+					if (str[k + 1] == '\0') {
+						editedBuf[j] = '\r';
+						j++;
+						editedBuf[j] = '\n';
+						j++;
+						row = 0;
+						break;
+					}
+				}
+				i--;
+			}
+			else {
+				editedBuf[j] = buf[i];
+				j++;
+			}
+
+			if (buf[i] == '\n') {
+				line++;
+			}
+
+			if (buf[i + 1] == '\0' && row == -1) {
+				for (int k = 0; k < sizeof(stringToInsert); k++) {
+					editedBuf[j] = str[k];
+					j++;
+					if (str[k + 1] == '\0') {
+						editedBuf[j] = '\r';
+						j++;
+						editedBuf[j] = '\n';
+						j++;
+						row = 0;
+						break;
+					}
+				}
+			}
+		}
+
+		b = WriteFile(hAppend, editedBuf, j, &n, NULL);
+		if (!b) {
+			CloseHandle(hAppend);
+			throw ("Write file unsuccessful\n");
+		}
+
+		std::cout << editedBuf << std::endl;
+		CloseHandle(hAppend);
+		return true;
+	}
+	catch (const char* em) {
+		std::cout << "-- Error: " << em << " \n";
+		return false;
+	}
+}
+
+
+int main()
 {
-    PLARGE_INTEGER fileSize = new LARGE_INTEGER();
-    int rowCount = 1;
-    int position = 0;
-    int positionAfter = 0;
-    bool rowFound = false;
-    try
-    {
-        HANDLE of = CreateFile( FileName,GENERIC_READ | GENERIC_WRITE, FILE_SHARE_READ, NULL, OPEN_ALWAYS,FILE_ATTRIBUTE_NORMAL,NULL);
-        if (of == INVALID_HANDLE_VALUE)
-        {
-            CloseHandle(of);
-            throw "Open file failed";
-        }
-        if (GetFileSizeEx(of, fileSize))
-        {
-            char* cstr = new char[wcslen(str) * sizeof(char)];
-            wcstombs(cstr, str, strlen(cstr));
-            char* buf = new char[(fileSize->QuadPart + 1) * sizeof(char)];
-            char* bufAfterIns = new char[(fileSize->QuadPart + 3 + strlen(cstr)) * sizeof(char)];
-            ZeroMemory(buf, (fileSize->QuadPart + 1) * sizeof(char));
+	setlocale(0, "ru");
+	LPWSTR  file = (LPWSTR)(L"../os9.txt");
 
-            ZeroMemory(bufAfterIns, (fileSize->QuadPart + 1 + strlen(cstr)) * sizeof(char));
-            DWORD n = NULL;
-            if (ReadFile(of, buf, fileSize->QuadPart, &n, NULL))
-            {
-                buf[fileSize->QuadPart] = '\0';
-                while (buf[position] != '\0')
-                {
-                    if ((rowCount == row || row == 0) && !rowFound)
-                    {
-                        for (int i = 0; i < strlen(cstr); i++)
-                        {
-                            bufAfterIns[positionAfter++] = cstr[i];
-                        }
-                        bufAfterIns[positionAfter++] = '\r';
-                        bufAfterIns[positionAfter++] = '\n';
-                        rowFound = true;
-                        rowCount++;
-                    }
-                    if (buf[position] == '\n')
-                    {
-                        rowCount++;
-                    }
-                    bufAfterIns[positionAfter++] = buf[position++];
-                    if (buf[position] == '\0')
-                    {
-                        break;
-                    }
-                }
-                if (row == MAXDWORD)
-                {
-                    bufAfterIns[positionAfter++] = '\r';
-                    bufAfterIns[positionAfter++] = '\n';
-                    for (int i = 0; i < strlen(cstr); i++)
-                    {
-                        bufAfterIns[positionAfter++] = cstr[i];
-                    }
-                    rowFound = true;
-                    rowCount++;
-                }
-                bufAfterIns[positionAfter] = '\0';
-            }
-            if (rowFound)
-            {
-                if (SetFilePointer(of, 0, 0, FILE_BEGIN) == 0)
-                {
-                    if (WriteFile(of, bufAfterIns, strlen(bufAfterIns), &n, NULL))
-                    {
-                        printf("\nRow inserted successfully\n");
-                    }
-                    else
-                    {
-                        CloseHandle(of);
-                        throw "WriteFile failed";
-                    }
-                    if (!SetEndOfFile(of))
-                    {
-                        CloseHandle(of);
-                        throw "SetEndOfFile failed";
-                    }
-                }
-                else
-                {
-                    CloseHandle(of);
-                    throw "SetFilePointer failed";
-                }
-            }
-            else
-            {
-                CloseHandle(of);
-                throw "Row isn't found";
-            }
-        }
-        else
-        {
-            CloseHandle(of);
-            throw "GetFileSizeEx failed";
-        }
-        CloseHandle(of);
-    }
-    catch (const char* err)
-    {
-        cout << "\n--- Error:" << err << "\n";
-        return false;
-    }
-    return true;
-}
+	char str[] = "string";
+	wchar_t wStr[50];
+	mbstowcs(wStr, str, strlen(str) + 1);
+	LPWSTR strToIns = wStr;
 
-int main() {
-    SetConsoleOutputCP(1251);
-    LPCWSTR file = L"D:\\универ\\ос\\лабы\\1\\os9.txt";
-    LPCWSTR srt1 = L"new string";
-    printFileTxt(LPWSTR(file));
-    insRowFileTxt(LPWSTR(file), LPWSTR(srt1), 0);
-    printFileTxt(LPWSTR(file));
-    insRowFileTxt(LPWSTR(file), LPWSTR(srt1), -1);
-    printFileTxt(LPWSTR(file));
-    insRowFileTxt(LPWSTR(file), LPWSTR(srt1), 5);
-    printFileTxt(LPWSTR(file));
-    insRowFileTxt(LPWSTR(file), LPWSTR(srt1), 7);
-    printFileTxt(LPWSTR(file));
-    return 0;
+	insRowFileTxt(file, strToIns, 1);
+	insRowFileTxt(file, strToIns, 7);
+	insRowFileTxt(file, strToIns, 1);
+	insRowFileTxt(file, strToIns, 7);
+	insRowFileTxt(file, strToIns, 1);
+	insRowFileTxt(file, strToIns, 7);
+	insRowFileTxt(file, strToIns, 1);
+	insRowFileTxt(file, strToIns, 7);
+
+
+	printFileText(file);
+
+	system("pause");
 }

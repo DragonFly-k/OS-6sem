@@ -76,7 +76,7 @@ BOOL delRowFileTxt(LPWSTR FileName, DWORD row)
             {
                 if (SetFilePointer(of, 0, 0, FILE_BEGIN) == 0)
                 {
-                    if (WriteFile(of, bufAfterDel, strlen(bufAfterDel)-1, &n, NULL))
+                    if (WriteFile(of, bufAfterDel, strlen(bufAfterDel), &n, NULL))
                     {
                         cout << "\nRow deleted successfully" << endl;
                     }

@@ -1,35 +1,7 @@
-new string
-new string
-new string
-new string
-new string
-new string
-new string
-new string
-new string
-new string
-new string
-new string
-new string
-new string
-2  Белашнов Василий Александрович
-new string
-new string
-3  Демидов Виктор Владимирович
-new string
-new string
+1  Артем Елизавета Владимировна
+string
+string
+string
 5  Коржова Валерия Сергеевна
-new string
-new string
-6  Мазенкова Ирина Владимировна
-new string
 7  Миневич Кристина Викторовна
-8  Пилипович Дмитрий Сергеевич
-9  Раченок Илья Александрович
-new string
-new string
-new string
-new string
-new string
-new string
-new string
+8  Пилипович Дмитрий Сергеевич

@@ -30,11 +30,11 @@ bool printFileInfo(LPWSTR FileName) {
 	cout << "Тип файла: ";
 	DWORD fileType = GetFileType(fileHandle);
 	switch (fileType) {
-	case FILE_TYPE_CHAR: cout << "FILE_TYPE_CHAR" << std::endl; break;
-	case FILE_TYPE_DISK: cout << "FILE_TYPE_DISK" << std::endl; break;
-	case FILE_TYPE_PIPE: cout << "FILE_TYPE_PIPE" << std::endl; break;
-	case FILE_TYPE_REMOTE: cout << "FILE_TYPE_REMOTE" << std::endl; break;
-	case FILE_TYPE_UNKNOWN: cout << "FILE_TYPE_UNKNOWN" << std::endl; break;
+	case FILE_TYPE_CHAR: cout << "FILE_TYPE_CHAR" << endl; break;
+	case FILE_TYPE_DISK: cout << "FILE_TYPE_DISK" << endl; break;
+	case FILE_TYPE_PIPE: cout << "FILE_TYPE_PIPE" << endl; break;
+	case FILE_TYPE_REMOTE: cout << "FILE_TYPE_REMOTE" << endl; break;
+	case FILE_TYPE_UNKNOWN: cout << "FILE_TYPE_UNKNOWN" << endl; break;
 	default:cout << " FILE_TYPE_UNKNOWN" << endl << endl; break;
 	}
 
