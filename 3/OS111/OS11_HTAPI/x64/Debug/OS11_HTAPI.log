@@ -1,0 +1,36 @@
+﻿  pch.cpp
+  dllmain.cpp
+  HT.cpp
+D:\универ\ос\лабы\3\OS111\OS11_HTAPI\HT.cpp(1): warning C4603: _CRT_SECURE_NO_WARNINGS: макрос не определен или определение изменилось после использования предкомпилированного заголовка
+D:\универ\ос\лабы\3\OS111\OS11_HTAPI\HT.cpp(1): message : Добавление макроопределения в предкомпилированный заголовок вместо определения его здесь
+D:\универ\ос\лабы\3\OS111\OS11_HTAPI\HT.cpp(4): message : использование предварительно скомпилированного заголовка
+D:\универ\ос\лабы\3\OS111\OS11_HTAPI\HT.cpp(2): warning C4603: _CRT_NON_CONFORMING_WCSTOK: макрос не определен или определение изменилось после использования предкомпилированного заголовка
+D:\универ\ос\лабы\3\OS111\OS11_HTAPI\HT.cpp(2): message : Добавление макроопределения в предкомпилированный заголовок вместо определения его здесь
+D:\универ\ос\лабы\3\OS111\OS11_HTAPI\HT.cpp(4): message : использование предварительно скомпилированного заголовка
+D:\универ\ос\лабы\3\OS111\OS11_HTAPI\HT.h(46,4): warning C4091: __declspec(dllexport): пропускается слева от "HT::HTHANDLE", когда ни одна переменная не объявлена
+D:\универ\ос\лабы\3\OS111\OS11_HTAPI\HT.h(58,4): warning C4091: __declspec(dllexport): пропускается слева от "HT::Element", когда ни одна переменная не объявлена
+D:\универ\ос\лабы\3\OS111\OS11_HTAPI\HT.cpp(80,2): warning C4297: HT::Create: ожидается, что функция не будет выдавать исключения, но она это делает
+D:\универ\ос\лабы\3\OS111\OS11_HTAPI\HT.cpp(80,2): message : для функции указан атрибут __declspec(nothrow), throw(), noexcept(true) или noexcept
+D:\универ\ос\лабы\3\OS111\OS11_HTAPI\HT.cpp(88,2): warning C4297: HT::Create: ожидается, что функция не будет выдавать исключения, но она это делает
+D:\универ\ос\лабы\3\OS111\OS11_HTAPI\HT.cpp(88,2): message : для функции указан атрибут __declspec(nothrow), throw(), noexcept(true) или noexcept
+D:\универ\ос\лабы\3\OS111\OS11_HTAPI\HT.cpp(94,2): warning C4297: HT::Create: ожидается, что функция не будет выдавать исключения, но она это делает
+D:\универ\ос\лабы\3\OS111\OS11_HTAPI\HT.cpp(94,2): message : для функции указан атрибут __declspec(nothrow), throw(), noexcept(true) или noexcept
+D:\универ\ос\лабы\3\OS111\OS11_HTAPI\HT.cpp(102,2): warning C4297: HT::Create: ожидается, что функция не будет выдавать исключения, но она это делает
+D:\универ\ос\лабы\3\OS111\OS11_HTAPI\HT.cpp(102,2): message : для функции указан атрибут __declspec(nothrow), throw(), noexcept(true) или noexcept
+D:\универ\ос\лабы\3\OS111\OS11_HTAPI\HT.cpp(133,2): warning C4297: HT::OpenExist: ожидается, что функция не будет выдавать исключения, но она это делает
+D:\универ\ос\лабы\3\OS111\OS11_HTAPI\HT.cpp(133,2): message : для функции указан атрибут __declspec(nothrow), throw(), noexcept(true) или noexcept
+D:\универ\ос\лабы\3\OS111\OS11_HTAPI\HT.cpp(141,2): warning C4297: HT::OpenExist: ожидается, что функция не будет выдавать исключения, но она это делает
+D:\универ\ос\лабы\3\OS111\OS11_HTAPI\HT.cpp(141,2): message : для функции указан атрибут __declspec(nothrow), throw(), noexcept(true) или noexcept
+D:\универ\ос\лабы\3\OS111\OS11_HTAPI\HT.cpp(148,2): warning C4297: HT::OpenExist: ожидается, что функция не будет выдавать исключения, но она это делает
+D:\универ\ос\лабы\3\OS111\OS11_HTAPI\HT.cpp(148,2): message : для функции указан атрибут __declspec(nothrow), throw(), noexcept(true) или noexcept
+D:\универ\ос\лабы\3\OS111\OS11_HTAPI\HT.cpp(173,2): warning C4297: HT::Open: ожидается, что функция не будет выдавать исключения, но она это делает
+D:\универ\ос\лабы\3\OS111\OS11_HTAPI\HT.cpp(173,2): message : для функции указан атрибут __declspec(nothrow), throw(), noexcept(true) или noexcept
+D:\универ\ос\лабы\3\OS111\OS11_HTAPI\HT.cpp(179,2): warning C4297: HT::Open: ожидается, что функция не будет выдавать исключения, но она это делает
+D:\универ\ос\лабы\3\OS111\OS11_HTAPI\HT.cpp(179,2): message : для функции указан атрибут __declspec(nothrow), throw(), noexcept(true) или noexcept
+D:\универ\ос\лабы\3\OS111\OS11_HTAPI\HT.cpp(185,2): warning C4297: HT::Open: ожидается, что функция не будет выдавать исключения, но она это делает
+D:\универ\ос\лабы\3\OS111\OS11_HTAPI\HT.cpp(185,2): message : для функции указан атрибут __declspec(nothrow), throw(), noexcept(true) или noexcept
+D:\универ\ос\лабы\3\OS111\OS11_HTAPI\HT.cpp(191,2): warning C4297: HT::Open: ожидается, что функция не будет выдавать исключения, но она это делает
+D:\универ\ос\лабы\3\OS111\OS11_HTAPI\HT.cpp(191,2): message : для функции указан атрибут __declspec(nothrow), throw(), noexcept(true) или noexcept
+  Создание кода...
+     Создается библиотека D:\универ\ос\лабы\3\OS111\x64\Debug\OS11_HTAPI.lib и объект D:\универ\ос\лабы\3\OS111\x64\Debug\OS11_HTAPI.exp
+  OS11_HTAPI.vcxproj -> D:\универ\ос\лабы\3\OS111\x64\Debug\OS11_HTAPI.dll
